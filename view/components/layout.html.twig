@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/output.css">
+        <title>
+            {{ page_title }}
+        </title>
+    </head>
+    <body>
+        <nav class="bg-gray-800 text-white py-3 px-4 flex items-center justify-between">
+            <a class="font-bold text-xl tracking-tight" href="#">Bibliothèque</a>
+            <div class="flex items-center">
+                <a class="text-sm px-4 py-2 leading-none rounded-full hover:bg-gray-700" href="#">Livres</a>
+                <a class="text-sm px-4 py-2 leading-none rounded-full hover:bg-gray-700" href="#">Auteurs</a>
+                {% if session["connected"] == true %}
+                    <a class="text-sm px-4 py-2 leading-none rounded-full hover:bg-gray-700" href="/deconnection">Déconnection</a>
+                {% else %}
+                    <a class="text-sm px-4 py-2 leading-none rounded-full hover:bg-gray-700" href="/connection">Se connecter</a>
+                {% endif %}
+            </div>
+        </nav>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+</html>

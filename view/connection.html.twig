@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/output.css">
+        <title>{{ page_title }}</title>
+    </head>
+    <body class="flex h-screen justify-center">
+        <div class="flex flex-col justify-center m-auto min-w-125">
+            <div class="flex items-center mb-7">
+                <h1 class="inline-block align-middle text-3xl text-blue-400">Bibliothèque
+                    <span class="text-gray-400">- Data</span>
+                </h1>
+            </div>
+            <div>
+                <form action="check_user" method="POST">
+                    <div class="flex flex-col mb-3">
+                        <label class="text-xl mb-1" for="login">Login Utilisateur</label>
+                        <input class="border-2 border-gray-300 px-3 py-1" type="text" name="login" id="login" placeholder="Entrer votre login utilisateur">
+                    </div>
+                    <div class="flex flex-col mb-3">
+                        <label class="text-xl mb-1" for="password">Mot de passe</label>
+                        <input class="border-2 border-gray-300 px-3 py-1" type="password" name="password" id="password" placeholder="Entrer votre mot de passe">
+                    </div>
+                    <input class="bg-blue-400 text-white w-full p-2.5 hover:cursor-pointer" type="submit" value="LOGIN">
+                </form>
+                {% if error is not null %}
+                    <p class="text-red-500">Erreur :
+                        {{ error }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>

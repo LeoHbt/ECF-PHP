@@ -7,3 +7,5 @@ $loader = new FilesystemLoader(dirname(__DIR__) . DIRECTORY_SEPARATOR . "view");
 $twig = new Environment($loader, [
     "cache" => false
 ]);
+$twig->addGlobal("session", $_SESSION);
+$twig->addGlobal("post", $_POST);
