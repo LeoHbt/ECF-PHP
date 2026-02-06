@@ -17,13 +17,13 @@
                 <form action="check_user" method="POST">
                     <div class="flex flex-col mb-3">
                         <label class="text-xl mb-1" for="login">Login Utilisateur</label>
-                        <input class="border-2 border-gray-300 px-3 py-1" type="text" name="login" id="login" placeholder="Entrer votre login utilisateur">
+                        <input class="border-2 border-gray-300 px-3 py-1" type="text" name="login" id="login" maxlength="25" placeholder="Entrer votre login utilisateur">
                     </div>
                     <div class="flex flex-col mb-3">
                         <label class="text-xl mb-1" for="password">Mot de passe</label>
-                        <input class="border-2 border-gray-300 px-3 py-1" type="password" name="password" id="password" placeholder="Entrer votre mot de passe">
+                        <input class="border-2 border-gray-300 px-3 py-1" type="password" name="password" id="password" maxlength="25" placeholder="Entrer votre mot de passe">
                     </div>
-                    <input class="bg-blue-400 text-white w-full p-2.5 hover:cursor-pointer" type="submit" value="LOGIN">
+                    <input class="bg-blue-400 text-white w-full p-2.5 hover:cursor-pointer hover:bg-blue-500" type="submit" value="LOGIN">
                 </form>
                 {% if error is not null %}
                     <p class="text-red-500">Erreur :

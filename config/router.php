@@ -6,8 +6,11 @@ $router = new AltoRouter();
 $router->map("GET", "/", function() {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "home.php";
 });
-$router->map("GET|POST", "/connection", function() {
-    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "connection.php";
+$router->map("GET|POST", "/connexion", function() {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "connexion.php";
+});
+$router->map("GET", "/deconnection", function() {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "deconnection.php";
 });
 $router->map("POST", "/check_user", function() {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "check_user.php";

@@ -10,11 +10,6 @@ class User {
     private string $password;
     private string $role;
 
-    public function test() 
-    {
-        var_dump(Database::class);
-    }
-
     public function __construct(string $username, string $password) 
     {
         $this->username = $username;

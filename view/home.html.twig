@@ -1,1 +1,30 @@
 {% extends "components/layout.html.twig" %}
+
+{% block content %}
+    <main>
+        <h1 class="ml-[10%] mt-22 text-4xl text-blue-400 font-bold">Trouvez votre prochain livre favori</h1>
+        <form action="POST" class="flex justify-center">
+            <input class="w-[60%] rounded border p-1 mt-5 border-black" type="text" maxlength="50">
+            <button class="bg-blue-400 text-white rounded-xl text-sm p-1 mt-5 ml-2 hover:cursor-pointer hover:bg-blue-500" type="submit">Rechercher</button>
+        </form>
+    <div class="flex flex-wrap justify-center mt-8">
+    {% for book in books %}
+        <div class="max-w-sm rounded overflow-hidden shadow-lg m-3">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">
+                    {{ book.titre }}
+                </div>
+                <p class="text-gray-700 text-base">
+                    {{ book.synopsis }}
+                </p>
+                <p>
+                    {{ book.prenom }} {{ book.nom }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    </main>
+
+{% endblock %}
