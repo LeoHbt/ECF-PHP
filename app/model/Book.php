@@ -34,9 +34,11 @@ class Book {
            $database = Database::getInstance();
             $instance = $database->getConnection();
             $stmt = $instance->prepare(
-                "SELECT `titre`, `annee_publication`, `disponible`, `synopsis`, `like`, a.nom AS auteurNom,`prenom`, c.nom AS categorieNom
-                FROM `livres` 
-                NATURAL JOIN `auteurs` AS a, `categories` AS c"
+                "SELECT l.id, `titre`, `annee_publication`, `disponible`, `synopsis`, `like`, a.nom AS auteurNom,`prenom`, c.nom AS categorieNom
+                FROM `livres` l 
+                INNER JOIN `auteurs` a ON l.auteur_id = a.id
+                INNER JOIN `categories` c ON l.categorie_id = c.id
+                ORDER BY l.id"
             );
             $stmt->execute();
             $response = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);
@@ -44,6 +46,55 @@ class Book {
         } catch (PDOException $e) {
             return $e;
         }
+    }
+
+    static function getPageBooks(int $firstBook, int $byPages, string $userString = "")
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "SELECT l.id, `titre`, `annee_publication`, `disponible`, `synopsis`, `like`, a.nom AS auteurNom,`prenom`, c.nom AS categorieNom
+                FROM `livres` l 
+                INNER JOIN `auteurs` a ON l.auteur_id = a.id
+                INNER JOIN `categories` c ON l.categorie_id = c.id
+                WHERE `titre` LIKE :userString
+                ORDER BY l.id
+                LIMIT :firstBook, :byPages"
+            );
+            $stmt->bindValue(":firstBook", $firstBook, PDO::PARAM_INT);
+            $stmt->bindValue(":byPages", $byPages, PDO::PARAM_INT);
+            $stmt->bindValue(":userString", "%" . $userString . "%", PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+
+    static function getNumberBooks(string $userString = "")
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "SELECT COUNT(*) AS nb_books 
+                FROM `livres`
+                WHERE `titre` LIKE :userString"
+            );
+            $stmt->bindValue(":userString", "%" . $userString . "%", PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result["nb_books"];
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+
+    static function getTotalPages(int $articlesByPages, string $userString = "")
+    {
+        return floor(Book::getNumberBooks($userString) / $articlesByPages);
     }
 
     public function getId()

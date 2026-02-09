@@ -3,28 +3,64 @@
 {% block content %}
     <main>
         <h1 class="ml-[10%] mt-22 text-4xl text-blue-400 font-bold">Trouvez votre prochain livre favori</h1>
-        <form action="POST" class="flex justify-center">
-            <input class="w-[60%] rounded border p-1 mt-5 border-black" type="text" maxlength="50">
+        <form action="/" method="GET" class="flex justify-center">
+            <input class="w-[60%] rounded border p-1 mt-5 border-black" type="text" name="userSearch" maxlength="50" value="{{ userSearch }}">
             <button class="bg-blue-400 text-white rounded-xl text-sm p-1 mt-5 ml-2 hover:cursor-pointer hover:bg-blue-500" type="submit">Rechercher</button>
         </form>
-    <div class="flex flex-wrap justify-center mt-8">
-    {% for book in books %}
-        <div class="max-w-sm rounded overflow-hidden shadow-lg m-3">
-            <div class="px-6 py-4">
-                <div class="font-bold text-xl mb-2">
-                    {{ book.titre }}
-                </div>
-                <p class="text-gray-700 text-base">
-                    {{ book.synopsis }}
-                </p>
-                <p>
-                    {{ book.prenom }} {{ book.nom }}
-                </p>
-            </div>
+        <div class=" mt-4 font-bold ml-[10%]">
+            <p>Page:
+                {{ currentPage }}
+                sur
+                {{ totalPages }}</p>
         </div>
-    {% endfor %}
-    </div>
+        <div class="flex flex-wrap justify-center">
+            {% for book in books %}
+                <div class="max-w-sm rounded overflow-hidden shadow-lg m-3">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">
+                            {{ book.titre }}
+                        </div>
+                        <p class="text-gray-700 text-base">
+                            {{ book.synopsis }}
+                        </p>
+                        <div class="">
+                            <p class="text-right">
+                                {{ book.prenom }}
+                                {{ book.auteurNom }}
+                            </p>
+                        </div>
+                        {% if book.like == 0 %}
+                            <div>
+                                <img class="w-7 hover:cursor-pointer" src="./img/hollow_heart.png" alt="">
+                            </div>
+                        {% else %}
+                            <div>
+                                <img class="w-7 hover:cursor-pointer" src="./img/filled_heart.png" alt="">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <nav>
+            <ul class="flex justify-center py-5">
+                <li class="mx-1">
+                    {% if currentPage <= 1 %}
+                        <a class="bg-blue-200 text-white p-2 rounded-full">Précédent</a>
+                    {% else %}
+                        <a class="bg-blue-400 text-white p-2 rounded-full" href="/?page={{ previousPage }}&userSearch={{ userSearch }}">Précédent</a>
+                    {% endif %}
+                </li>
+                <li class="mx-1">
+                    {% if currentPage >= totalPages %}
+                        <a class="bg-blue-200 text-white p-2 rounded-full">Suivant</a>
+                    {% else %}
+                        <a class="bg-blue-400 text-white p-2 rounded-full" href="/?page={{ nextPage }}&userSearch={{ userSearch }}">Suivant</a>
+                    {% endif %}
+                </li>
 
+            </ul>
+        </nav>
     </main>
 
 {% endblock %}
