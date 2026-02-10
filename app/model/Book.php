@@ -92,6 +92,67 @@ class Book {
         }
     }
 
+    static function getBookData(int $bookID)
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "SELECT * 
+                FROM `livres`
+                WHERE `id` = :bookID"
+            );
+            $stmt->bindValue(":bookID", $bookID, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return $e;
+        }
+        
+    }
+
+    static function updateBook(int $bookID, string $newTitle, int $newYear, string $newSynopsis)
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "UPDATE `livres`
+                SET `titre` = :newTitle, `annee_publication` = :newYear, `synopsis` = :newSynopsis
+                WHERE `id` = :bookID"
+            );
+            $stmt->bindValue(":newTitle", $newTitle, PDO::PARAM_STR);
+            $stmt->bindValue(":newYear", $newYear, PDO::PARAM_STR);
+            $stmt->bindValue(":newSynopsis", $newSynopsis, PDO::PARAM_STR);
+            $stmt->bindValue(":bookID", $bookID, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+        
+    }
+
+    static function updateLike(int $bookID)
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "UPDATE `livres` 
+                SET `like` = IF(`like` = 0, 1, 0)
+                WHERE `id` = :bookID"
+            );
+            $stmt->bindValue(":bookID", $bookID, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+        
+    }
+
     static function getTotalPages(int $articlesByPages, string $userString = "")
     {
         return floor(Book::getNumberBooks($userString) / $articlesByPages);

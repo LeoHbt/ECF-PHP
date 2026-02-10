@@ -2,7 +2,7 @@
 
 {% block content %}
     <main>
-        <h1 class="ml-[10%] mt-22 text-4xl text-blue-400 font-bold">Trouvez votre prochain livre favori</h1>
+        <h1 class="text-center mt-22 text-4xl text-blue-400 font-bold">Trouvez votre prochain livre favori</h1>
         <form action="/" method="GET" class="flex justify-center">
             <input class="w-[60%] rounded border p-1 mt-5 border-black" type="text" name="userSearch" maxlength="50" value="{{ userSearch }}">
             <button class="bg-blue-400 text-white rounded-xl text-sm p-1 mt-5 ml-2 hover:cursor-pointer hover:bg-blue-500" type="submit">Rechercher</button>
@@ -15,29 +15,33 @@
         </div>
         <div class="flex flex-wrap justify-center">
             {% for book in books %}
-                <div class="max-w-sm rounded overflow-hidden shadow-lg m-3">
-                    <div class="px-6 py-4">
+                <div class="max-w-sm rounded overflow-hidden shadow-lg m-3 relative">
+                    <div class="px-6 py-4 h-full flex flex-col justify-around">
                         <div class="font-bold text-xl mb-2">
                             {{ book.titre }}
                         </div>
                         <p class="text-gray-700 text-base">
                             {{ book.synopsis }}
                         </p>
-                        <div class="">
-                            <p class="text-right">
+                        <div class="mt-auto">
+                            <p class="text-right font-bold">
                                 {{ book.prenom }}
                                 {{ book.auteurNom }}
                             </p>
                         </div>
-                        {% if book.like == 0 %}
-                            <div>
-                                <img class="w-7 hover:cursor-pointer" src="./img/hollow_heart.png" alt="">
-                            </div>
-                        {% else %}
-                            <div>
-                                <img class="w-7 hover:cursor-pointer" src="./img/filled_heart.png" alt="">
-                            </div>
-                        {% endif %}
+                        <div class="flex">
+                            {% if book.like == 0 %}
+                                <a href="modify_like{{ book.id }}"><img class="w-7 hover:cursor-pointer" src="./img/hollow_heart.png" alt=""></a>
+                            {% else %}
+                                <a href="modify_like{{ book.id }}"><img class="w-7 hover:cursor-pointer" src="./img/filled_heart.png" alt=""></a>
+                            {% endif %}
+                            {% if session.role == "admin" %}
+                                <button class="hover:cursor-pointer p-1.5 ml-auto mr-2 text-white bg-green-400 rounded-md">
+                                    <a href="/modify{{ book.id }}">Modifier</a>
+                                </button>
+                                <button class="hover:cursor-pointer p-1.5 text-white bg-red-400 rounded-md">Supprimer</button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -58,7 +62,6 @@
                         <a class="bg-blue-400 text-white p-2 rounded-full" href="/?page={{ nextPage }}&userSearch={{ userSearch }}">Suivant</a>
                     {% endif %}
                 </li>
-
             </ul>
         </nav>
     </main>

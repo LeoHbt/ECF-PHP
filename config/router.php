@@ -15,6 +15,12 @@ $router->map("GET", "/deconnection", function() {
 $router->map("POST", "/check_user", function() {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "check_user.php";
 });
+$router->map("GET|POST", "/modify[i:id]", function($id) {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "modify_book_page.php";
+});
+$router->map("GET", "/modify_like[i:id]", function($id) {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "modify_like_script.php";
+});
 
 // Execute fonction si match
 $match = $router->match();

@@ -1,0 +1,32 @@
+{% extends "components/layout.html.twig" %}
+
+{% block content %}
+    <main class="flex justify-center">
+        <div class="flex flex-col justify-center m-auto min-w-125">
+            <h1 class="text-4xl text-center my-5">Livre n°{{ book_id }}</h1>
+            <form id="modify_form" class="bg-blue-200 rounded-2xl p-3" action="/modify_book_script{{ book_id }}" method="POST">
+                <div class="flex flex-col my-2">
+                    <label class="font-medium" for="titre">Titre :</label>
+                    <input class="bg-white rounded-sm p-1" name="newTitle" type="text" value="{{ book_title }}" maxlength="255">
+                </div>
+                <div class="flex flex-col my-2">
+                    <label class="font-medium" for="year">Année :</label>
+                    <input class="bg-white rounded-sm p-1" name="newYear" type="number" value="{{ book_year }}">
+                </div>
+                <div class="flex flex-col my-2">
+                    <label class="font-medium" for="synopsis">Synopsis :</label>
+                    <textarea class="bg-white rounded-sm p-1" name="newSynopsis" rows="5" maxlength="65 535">{{ book_synopsis }} </textarea>
+                </div>
+            </form>
+            <div class="flex justify-around mt-5">
+                <button class="bg-gray-500 p-2 text-white rounded-md hover:cursor-pointer">
+                    <a href="/">Retour</a>
+                </button>
+                <button class="bg-blue-400 p-2 text-white rounded-md hover:cursor-pointer" form="modify_form" type="submit">Valider</button>
+            </div>
+            {% if book_modified == true %}
+                <p class="text-center text-green-400 text-2xl">Livre modifié !</p>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

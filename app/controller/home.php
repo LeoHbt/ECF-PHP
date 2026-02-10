@@ -17,7 +17,7 @@ if(isset($_GET['userSearch']) && !empty($_GET['userSearch'])){
 
 // Nombre de livres par pages
 $byPages = 16;
-$firstBook = ($currentPage * $byPages) - $byPages;
+$firstBook = ceil($currentPage * $byPages) - $byPages;
 
 echo $twig->render("home.html.twig", [
     "page_title" => "Bibliothèque - Home",
@@ -28,7 +28,3 @@ echo $twig->render("home.html.twig", [
     "totalPages" => Book::getTotalPages($byPages, $userSearch),
     "userSearch" => $userSearch
 ]);
-
-echo "<pre>";
-var_dump(Book::getPageBooks($firstBook, $byPages, $userSearch));
-echo "</pre>";
