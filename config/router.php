@@ -21,6 +21,13 @@ $router->map("GET|POST", "/modify[i:id]", function($id) {
 $router->map("GET", "/modify_like[i:id]", function($id) {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "modify_like_script.php";
 });
+// TO FIX
+$router->map("GET", "/delete_book[i:id]", function($id) {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "delete_book.php";
+});
+$router->map("GET", "/add_book", function() {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "add_book.php";
+});
 
 // Execute fonction si match
 $match = $router->match();

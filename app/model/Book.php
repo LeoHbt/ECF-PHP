@@ -15,19 +15,6 @@ class Book {
     private string $synopsis;
     private bool $like;
 
-    public function __construct(int $id = 0, string $titre = "", int $authorID = 0, int $categoryID = 0, int $year = 0, string $isbn = "", bool $available = false, string $synopsis = "", bool $like = false)
-    {
-        $this->id = $id;
-        $this->titre = $titre;
-        $this->authorID = $authorID;
-        $this->categoryID = $categoryID;
-        $this->year = $year;
-        $this->isbn = $isbn;
-        $this->available = $available;
-        $this->synopsis = $synopsis;
-        $this->like = $like;
-    }
-
     static function getAllBooks()
     {
         try {
