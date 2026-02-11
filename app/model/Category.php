@@ -16,7 +16,7 @@ class Category {
             $stmt = $instance->prepare(
                 "SELECT *
                 FROM `categories`
-                ORDER BY `nom`"
+                ORDER BY `id`"
             );
             $stmt->execute();
             $response = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);

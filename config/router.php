@@ -21,6 +21,15 @@ $router->map("GET|POST", "/modify[i:id]", function($id) {
 $router->map("GET", "/modify_like[i:id]", function($id) {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "modify_like_script.php";
 });
+$router->map("GET", "/auteurs", function() {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "auteurs.php";
+});
+$router->map("GET", "/auteur[i:id]", function($id) {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "auteur.php";
+});
+$router->map("GET", "/categories", function() {
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "categories.php";
+});
 // TO FIX
 $router->map("GET", "/delete_book[i:id]", function($id) {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "delete_book.php";

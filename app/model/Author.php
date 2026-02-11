@@ -18,10 +18,28 @@ class Author {
             $stmt = $instance->prepare(
                 "SELECT *
                 FROM `auteurs`
-                ORDER BY `prenom`"
+                ORDER BY `id`"
             );
             $stmt->execute();
             $response = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);
+            return $response;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+
+    static function getAuthor(int $id)
+    {
+        try {
+           $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "SELECT *
+                FROM `auteurs`
+                WHERE `id` = :id"
+            );
+            $stmt->execute([":id" => $id]);
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
             return $response;
         } catch (PDOException $e) {
             return $e;

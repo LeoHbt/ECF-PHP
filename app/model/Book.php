@@ -41,7 +41,7 @@ class Book {
             $database = Database::getInstance();
             $instance = $database->getConnection();
             $stmt = $instance->prepare(
-                "SELECT l.id, `titre`, `annee_publication`, `disponible`, `synopsis`, `like`, a.nom AS auteurNom,`prenom`, c.nom AS categorieNom
+                "SELECT l.id, `titre`, `annee_publication`, `disponible`, `synopsis`, `like`, a.nom AS auteurNom,`prenom`, c.nom AS categorieNom, a.id AS authorID
                 FROM `livres` l 
                 INNER JOIN `auteurs` a ON l.auteur_id = a.id
                 INNER JOIN `categories` c ON l.categorie_id = c.id
