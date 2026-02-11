@@ -121,6 +121,32 @@ class Book {
         
     }
 
+    static function addBook(string $title, int $author, int $category, int $year, string $isbn, int $disponible)
+    {
+        try {
+            $database = Database::getInstance();
+            $instance = $database->getConnection();
+            $stmt = $instance->prepare(
+                "INSERT INTO `livres` (`titre`, `auteur_id`, `categorie_id`, `annee_publication`, `isbn`, `disponible`, `synopsis`, `like`)
+                VALUES (`:title`, `:author`, `:category`, `:annee`, `:isbn`, `:disponible`, `:synopsis`, `:fav`)"
+            );
+            $stmt->execute([
+                ":title" => $title,
+                ":author" => $author,
+                ":category" => $category,
+                ":annee" => $year,
+                ":isbn" => $isbn,
+                ":disponible" => "1",
+                ":synopsis" => $disponible,
+                ":fav" => "1" 
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+        
+    }
+
     static function updateLike(int $bookID)
     {
         try {
@@ -138,6 +164,54 @@ class Book {
             return $e;
         }
         
+    }
+
+    static function checkTitle($title) {
+        if (strlen($title) <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static function checkAuthor($author) {
+        if ($author == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static function checkCategory($category) {
+        if ($category == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static function checkYear($year) {
+        if ($year > date("Y") || $year <= 0 || empty($year)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static function checkISBN($isbn) {
+        if (strlen($isbn) < 11) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static function checkSynopsis($synopsis) {
+        if (strlen($synopsis) <= 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     static function getTotalPages(int $articlesByPages, string $userString = "")

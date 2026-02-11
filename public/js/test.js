@@ -20,8 +20,5 @@ btnSupprimer.forEach((button) => {
                 });
             }
         });
-        console.log(event);
-        event.preventDefault();
-        console.log(event);
     });
 });

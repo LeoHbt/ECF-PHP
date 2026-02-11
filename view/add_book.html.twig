@@ -4,50 +4,66 @@
     <main class="flex justify-center">
         <div class="flex flex-col justify-center m-auto min-w-125">
             <h1 class="text-4xl text-center my-5">Ajouter un livre{{ book_id }}</h1>
-            <form id="modify_form" class="bg-blue-200 rounded-2xl p-3" action="/modify_book_script{{ book_id }}" method="POST">
+            <form id="add_form" class="bg-blue-200 rounded-2xl p-3" action="/add_book" method="POST">
                 <div class="flex flex-col my-2">
-                    <label class="font-medium" for="titre">Titre :</label>
-                    <input class="bg-white rounded-sm p-1" name="newTitle" type="text" value="{{ book_title }}" maxlength="255">
+                    {% if correctTitle == false and post.titre is defined %}
+                        <label class="font-medium  text-red-400" for="titre">Titre incorrect :</label>
+                    {% else %}
+                        <label class="font-medium" for="titre">Titre :</label>
+                    {% endif %}
+                    <input class="bg-white rounded-sm p-1" name="titre" type="text" value="{{ post.titre }}" maxlength="255">
                 </div>
                 <div class="flex flex-col my-2">
                     <label class="font-medium" for="auteur">Auteur :</label>
                     <select class="bg-white rounded-sm p-1" name="auteur" id="auteur">
-                    <option value="" class="bg-white rounded-sm p-1"></option>
-                    {% for author in authors %}
-                        <option value="{{ author.id }}">{{ author.prenom }} {{ author.nom }}</option>
-                    {% endfor %}
+                        {% for author in authors %}
+                            <option value="{{ author.id }}">{{ author.prenom }}
+                                {{ author.nom }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="flex flex-col my-2">
                     <label class="font-medium" for="auteur">Catégorie :</label>
                     <select class="bg-white rounded-sm p-1" name="categorie" id="categorie">
-                    <option value="" class="bg-white rounded-sm p-1"></option>
-                    {% for categorie in categories %}
-                        <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
-                    {% endfor %}
+                        {% for categorie in categories %}
+                            <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="flex flex-col my-2">
-                    <label class="font-medium" for="year">Année :</label>
-                    <input class="bg-white rounded-sm p-1" name="newYear" type="number" value="{{ book_year }}">
+                    {% if correctYear == false and post.year is defined %}
+                        <label class="font-medium text-red-400" for="year">Année incorrecte :</label>
+                    {% else %}
+                        <label class="font-medium" for="year">Année :</label>
+                    {% endif %}
+                    <input class="bg-white rounded-sm p-1" name="year" type="number" value="{{ post.year }}">
                 </div>
                 <div class="flex flex-col my-2">
-                    <label class="font-medium" for="titre">ISBN :</label>
-                    <input class="bg-white rounded-sm p-1" name="isbn" type="text" maxlength="11">
+                    {% if correctISBN == false and post.isbn is defined %}
+                        <label class="font-medium text-red-400" for="titre">ISBN incorrect :</label>
+                    {% else %}
+                        <label class="font-medium" for="titre">ISBN :</label>
+                    {% endif %}
+                    <input class="bg-white rounded-sm p-1" name="isbn" type="text" maxlength="11" value="{{ post.isbn }}">
                 </div>
                 <div class="flex flex-col my-2">
-                    <label class="font-medium" for="synopsis">Synopsis :</label>
-                    <textarea class="bg-white rounded-sm p-1" name="newSynopsis" rows="5" maxlength="65 535">{{ book_synopsis }} </textarea>
+                    {% if correctSynopsis == false and post.synopsis is defined %}
+                        <label class="font-medium text-red-400" for="synopsis">Synopsis vide :</label>
+                    {% else %}
+                        <label class="font-medium" for="synopsis">Synopsis :</label>
+                    {% endif %}
+                    <textarea class="bg-white rounded-sm p-1" name="synopsis" rows="5" maxlength="65 535">{{ post.synopsis }}
+                    </textarea>
                 </div>
             </form>
             <div class="flex justify-around mt-5">
                 <button class="bg-gray-500 p-2 text-white rounded-md hover:cursor-pointer">
                     <a href="/">Retour</a>
                 </button>
-                <button class="bg-blue-400 p-2 text-white rounded-md hover:cursor-pointer" form="modify_form" type="submit">Valider</button>
+                <button class="bg-blue-400 p-2 text-white rounded-md hover:cursor-pointer" form="add_form" type="submit">Valider</button>
             </div>
-            {% if book_modified == true %}
-                <p class="text-center text-green-400 text-2xl">Livre modifié !</p>
+            {% if bookAdded == true %}
+                <p class="text-center text-green-400 text-2xl">Livre ajouté !</p>
             {% endif %}
         </div>
     </main>

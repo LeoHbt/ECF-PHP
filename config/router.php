@@ -25,7 +25,7 @@ $router->map("GET", "/modify_like[i:id]", function($id) {
 $router->map("GET", "/delete_book[i:id]", function($id) {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "delete_book.php";
 });
-$router->map("GET", "/add_book", function() {
+$router->map("GET|POST", "/add_book", function() {
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . "add_book.php";
 });
 
